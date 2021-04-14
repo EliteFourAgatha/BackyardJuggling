@@ -24,7 +24,7 @@ public class TouchInput : MonoBehaviour
         ballRB.AddForce(Vector2.up * forceValue, ForceMode2D.Impulse);
     }  
     
-    public void OnMouseDown()  //If user clicks on object on Android
+    public void OnMouseDown()  //If user touch input on Android
     {
         //If ball is currently in stasis, disable it by re-enabling gravity
         if(gameContScript.stasisEnabled)
@@ -38,7 +38,7 @@ public class TouchInput : MonoBehaviour
         
         //Get random angle value in radians, from 2π/3 (60 deg) to π/3 (120 deg)
         //  X value is random between 60 and 120 so the y value is always positive and ball moves upward
-        float randAngle = Random.Range((2f*(Mathf.PI)) / 3, Mathf.PI / 3);
+        float randAngle = Random.Range((2*(Mathf.PI)) / 3, Mathf.PI / 3);
         
         //Get X and Y values of point on circle, chosen from the random angle value
         float x = ballCenter.x + ballRadius * Mathf.Cos(randAngle);

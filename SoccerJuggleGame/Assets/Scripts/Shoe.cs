@@ -11,9 +11,6 @@ public class Shoe : MonoBehaviour
 
     AudioSource audioSource;
 
-    public GameObject gameBall;
-    public Rigidbody2D gameBallRB2D;
-
     public GameController gameContScript;
 
     public int shoeCount;
@@ -26,7 +23,6 @@ public class Shoe : MonoBehaviour
         Shoe2UI.SetActive(true);
         Shoe3UI.SetActive(true);
         shoeCount = 3;
-        Debug.Log(shoeCount);
     }
 
     //Spawn shoe under ball if it enters the shoe area
@@ -39,13 +35,7 @@ public class Shoe : MonoBehaviour
                 if(shoeCanSpawn == true)
                 {
                     ShoeUI.SetActive(false);
-                    shoeCount --;
-                    GameObject shoe = Instantiate(actualShoe, other.gameObject.GetComponent<CircleCollider2D>().ClosestPoint(transform.position), 
-                                                            Quaternion.identity);
-                    gameContScript.EnableBallStasis();
-                    audioSource.Play();
-                    Destroy(shoe, 1f);
-                    StartCoroutine(WaitForShoeRespawn());
+                    SpawnShoe(other);
                 }
             }
             else if(shoeCount == 2)
@@ -53,13 +43,7 @@ public class Shoe : MonoBehaviour
                 if(shoeCanSpawn == true)
                 {
                     Shoe2UI.SetActive(false);
-                    shoeCount --;
-                    GameObject shoe = Instantiate(actualShoe, other.gameObject.GetComponent<CircleCollider2D>().ClosestPoint(transform.position), 
-                                                            Quaternion.identity);
-                    gameContScript.EnableBallStasis();
-                    audioSource.Play();
-                    Destroy(shoe, 1f);
-                    StartCoroutine(WaitForShoeRespawn());
+                    SpawnShoe(other);
                 }
             }
             else if(shoeCount == 1)
@@ -67,16 +51,20 @@ public class Shoe : MonoBehaviour
                 if(shoeCanSpawn == true)
                 {
                     Shoe3UI.SetActive(false);
-                    shoeCount --;
-                    GameObject shoe = Instantiate(actualShoe, other.gameObject.GetComponent<CircleCollider2D>().ClosestPoint(transform.position), 
-                                                            Quaternion.identity);
-                    gameContScript.EnableBallStasis();
-                    audioSource.Play();
-                    Destroy(shoe, 1f);
-                    StartCoroutine(WaitForShoeRespawn());
+                    SpawnShoe(other);
                 }
             }
         }
+    }
+    public void SpawnShoe(Collider2D otherCol)
+    {
+        shoeCount --;
+        GameObject shoe = Instantiate(actualShoe, otherCol.gameObject.GetComponent<CircleCollider2D>().ClosestPoint(transform.position), 
+                                                Quaternion.identity);
+        gameContScript.EnableBallStasis();
+        audioSource.Play();
+        Destroy(shoe, 1f);
+        StartCoroutine(WaitForShoeRespawn());
     }
     IEnumerator WaitForShoeRespawn()
     {

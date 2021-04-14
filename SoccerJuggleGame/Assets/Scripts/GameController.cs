@@ -82,8 +82,8 @@ public class GameController : MonoBehaviour
     public void EnableGameOverMenu()
     {
         Time.timeScale = 0;
-        bonusBallScript.ChangeBonusBallState(1, false);
-        bonusBallScript.ChangeBonusBallState(2, false);
+        ChangeBonusBallState(1, false);
+        ChangeBonusBallState(2, false);
         changeBGScript.StopBGM();
         gameBallRB2D.gravityScale = 0f;
         gameHUD.SetActive(false);
@@ -162,12 +162,12 @@ public class GameController : MonoBehaviour
         if(bonusBall1.activeInHierarchy)
         {
             bonusBallScript.bonusBall1Active = true;
-            bonusBallScript.ChangeBonusBallState(1, false);
+            ChangeBonusBallState(1, false);
         }
         if(bonusBall2.activeInHierarchy)
         {
             bonusBallScript.bonusBall2Active = true;
-            bonusBallScript.ChangeBonusBallState(2, false);
+            ChangeBonusBallState(2, false);
         }
         gameHUD.SetActive(false);
         pauseMenuRecordText.text = tapRecord.ToString();
@@ -186,13 +186,19 @@ public class GameController : MonoBehaviour
             changeBGScript.StartBGM();
         }
         gameBall.SetActive(true);
+        //
+        //
+        //
+        //try if bonusball1.activeinhierarchy and see if it works
+        // if so, don't need reference to bonus ball script
+        // trying to unspaghetti the code a bit
         if(bonusBallScript.bonusBall1Active == true)
         {
-            bonusBallScript.ChangeBonusBallState(1, true);
+            ChangeBonusBallState(1, true);
         }
         if(bonusBallScript.bonusBall2Active == true)
         {
-            bonusBallScript.ChangeBonusBallState(2, true);
+            ChangeBonusBallState(2, true);
         }
         gameHUD.SetActive(true);
         pauseMenu.SetActive(false);
@@ -223,6 +229,19 @@ public class GameController : MonoBehaviour
          }
     }
     //End Menu Buttons
+
+    //Change bonus ball state on pause/unpause 
+    public void ChangeBonusBallState(int ballNumber, bool state)
+    {
+        if(ballNumber == 1)
+        {
+            bonusBall1.SetActive(state);
+        }
+        else if(ballNumber == 2)
+        {
+            bonusBall2.SetActive(state);
+        }
+    }
 
     //-Put ball into stasis mode if saved by shoe
     //-Turn off gravity scale, and change velocity and angular velocity to 0

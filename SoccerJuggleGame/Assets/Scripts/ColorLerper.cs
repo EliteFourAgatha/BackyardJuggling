@@ -5,23 +5,17 @@ using UnityEngine;
 public class ColorLerper : MonoBehaviour
 {
     public float lerpSpeed = 3f;
-    public Color lerpedColor = Color.white;
-    float startTime;
-    float t;
+    Color lerpedColor;
     public SpriteRenderer ringRenderer;
-    void Start()
-    {
-        startTime = Time.time;
-    }
 
     void Update()
     {
-        //Lerp color between red and green on a timer using PingPong
+        LerpRingColor();
+    }
+    public void LerpRingColor()
+    {
+        //Lerp color between red and green on timer using PingPong
         lerpedColor = Color.Lerp(Color.red, Color.green, Mathf.PingPong(Time.time, lerpSpeed));
         ringRenderer.color = lerpedColor;
-    }
-    public void DisableRing()
-    {
-        gameObject.SetActive(false);
     }
 }

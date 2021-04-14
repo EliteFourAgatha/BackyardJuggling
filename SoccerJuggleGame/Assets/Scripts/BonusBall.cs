@@ -8,8 +8,6 @@ public class BonusBall : MonoBehaviour
     public RectTransform bonusBall2SpawnArea;
     public GameObject bonusBall1;
     public GameObject bonusBall2;
-    public Rigidbody2D bonusBall1RB2D;
-    public Rigidbody2D bonusBall2RB2D;
 
     public GameController gameContScript;
 
@@ -20,12 +18,11 @@ public class BonusBall : MonoBehaviour
 
     void Update()
     {
-        SpawnBonusBalls();
+        SpawnBonusBall();
     }
     //-Check score from gamecontroller
     //-Spawn bonus ball at random point in rectTransform spawn area
-    //
-    public void SpawnBonusBalls()
+    public void SpawnBonusBall()
     {
         if(gameContScript.tapCount % 10 == 0 && gameContScript.tapCount != 0 && !bonusBall1.activeInHierarchy && bonus1CanSpawn == true)
         {
@@ -41,17 +38,6 @@ public class BonusBall : MonoBehaviour
                                         Random.Range(bonusBall2SpawnArea.rect.yMin, bonusBall2SpawnArea.rect.yMax), 0);
             bonusBall2.SetActive(true);
             StartCoroutine(WaitForBonus2Respawn());
-        }
-    }
-    public void ChangeBonusBallState(int ballNumber, bool state)
-    {
-        if(ballNumber == 1)
-        {
-            bonusBall1.SetActive(state);
-        }
-        else if(ballNumber == 2)
-        {
-            bonusBall2.SetActive(state);
         }
     }
     IEnumerator WaitForBonus1Respawn()
