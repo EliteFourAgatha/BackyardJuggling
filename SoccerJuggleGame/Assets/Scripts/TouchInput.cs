@@ -5,14 +5,12 @@ using UnityEngine;
 public class TouchInput : MonoBehaviour
 {
     public GameObject gameController;
+    public Rigidbody2D gameBallRB2D;
     AudioSource audioSource;
     GameController gameContScript;
     Rigidbody2D ballRB;
     Vector2 circleCenter;
     public float forceValue = 10f;
-    public int silverTaps;
-    public int goldTaps;
-
     void Start()
     {
         ballRB = gameObject.GetComponent<Rigidbody2D>();
@@ -26,8 +24,13 @@ public class TouchInput : MonoBehaviour
         ballRB.AddForce(Vector2.up * forceValue, ForceMode2D.Impulse);
     }  
     
-    public void OnMouseDown()  //If user clicks on object this script is attached to
+    public void OnMouseDown()  //If user clicks on object on Android
     {
+        //If ball is currently in stasis, disable it by re-enabling gravity
+        if(gameContScript.stasisEnabled)
+        {
+            gameBallRB2D.gravityScale = 0.85f;
+        }
         audioSource.Play();
 
         float ballRadius = 1;
@@ -54,12 +57,10 @@ public class TouchInput : MonoBehaviour
         if(gameObject.tag == "Bonus1")
         {
             gameContScript.tapCount += 2;
-            silverTaps += 1;
         }
         else if (gameObject.tag == "Bonus2")
         {
             gameContScript.tapCount += 5;
-            goldTaps += 1;
         }
         else
         {

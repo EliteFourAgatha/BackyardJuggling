@@ -17,13 +17,13 @@ public class OptionsMenu : MonoBehaviour
     public AudioSource bonusBall1Audio;
     public AudioSource bonusBall2Audio;
     public AudioSource backgroundAudio;
+    public AudioSource ohYeahAudio;
 
     public Image mainMenuBallImage;
 
     GameObject bonusBall1;
     GameObject bonusBall2;
 
-    public GameController gameController;
     public ChangeBG changeBGScript;
 
     Image optionsMenuBallImage;
@@ -34,9 +34,9 @@ public class OptionsMenu : MonoBehaviour
     public SpriteRenderer bonusBall2SR;
 
     //ballMenuImage array index
-    int i = 0;
-    //flatImage array index
-    int j = 0;
+    int ballIndex = 0;
+    //flagImage array index
+    int flagIndex = 0;
     void Start()
     {
         optionsMenuBallImage = ballMenuSpawnPoint.GetComponent<Image>();
@@ -52,56 +52,66 @@ public class OptionsMenu : MonoBehaviour
     }    
     void Update()
     {
-        optionsMenuBallImage.sprite = ballArray[i];
-        flagImage.sprite = flagArray[j];
+        optionsMenuBallImage.sprite = ballArray[ballIndex];
+        flagImage.sprite = flagArray[flagIndex];
     }
+    //Options menu right arrow UI button
     public void PressRightArrow()
     {
         //Keep index in bounds of array
-        if(i < 7)
+        if(ballIndex < 7)
         {
-            i++;
+            ballIndex++;
         }
-        if(j < 7)
+        if(flagIndex < 7)
         {
-            j++;
+            flagIndex++;
         }
     }
+    //Options menu left arrow UI button
     public void PressLeftArrow()
     {
         //Keep index in bounds of array
-        if (i > 0)
+        if (ballIndex > 0)
         {
-            i--;
+            ballIndex--;
         }
-        if (j > 0)
+        if (flagIndex > 0)
         {
-            j--;
+            flagIndex--;
         }
     }
+
+    //-Options menu ball selection
+    //-Set current selection for:
+    //--Main menu ball image
+    //--Game ball
+    //--Bonus ball 1 and 2
     public void SetCurrentBallChoice()
     {
-        gameBallSR.sprite = ballArray[i];
+        gameBallSR.sprite = ballArray[ballIndex];
         if(bonusBall1SR != null)
         {
-            bonusBall1SR.sprite = ballArray[i];
+            bonusBall1SR.sprite = ballArray[ballIndex];
         }
         if(bonusBall2SR != null)
         {
-            bonusBall2SR.sprite = ballArray[i];
+            bonusBall2SR.sprite = ballArray[ballIndex];
         }
         if(mainMenuBallImage != null)
         {
-            mainMenuBallImage.sprite = ballArray[i];
+            mainMenuBallImage.sprite = ballArray[ballIndex];
         }
     }
+    //Enable or disable SFX based on UI selection
     public void SFXSliderChanged(bool newValue)
     {
         gameBallAudio.enabled = newValue;
         bonusBall1Audio.enabled = newValue;
         bonusBall2Audio.enabled = newValue;
-        //enable for other sfx here if you add them (coin sound, whistle, kick for saved by shoe, etc.)
+        ohYeahAudio.enabled = newValue;
     }
+    //Enable or disable music based on UI selection
     public void BGMSliderChanged(bool newValue)
     {
         if(newValue == true)
@@ -114,6 +124,7 @@ public class OptionsMenu : MonoBehaviour
             changeBGScript.SetBGM(false);
         }
     }
+    //Enable or disable ambiance based on UI selection
     public void AmbienceSliderChange(bool newValue)
     {
         if(newValue == true)

@@ -12,6 +12,7 @@ public class Shoe : MonoBehaviour
     AudioSource audioSource;
 
     public GameObject gameBall;
+    public Rigidbody2D gameBallRB2D;
 
     public GameController gameContScript;
 
@@ -28,7 +29,7 @@ public class Shoe : MonoBehaviour
         Debug.Log(shoeCount);
     }
 
-    //Spawn shoe under ball if it enters the shoe zone
+    //Spawn shoe under ball if it enters the shoe area
     public void OnTriggerEnter2D(Collider2D other)
     {
         if(other.tag == "GameBall")
@@ -39,9 +40,9 @@ public class Shoe : MonoBehaviour
                 {
                     ShoeUI.SetActive(false);
                     shoeCount --;
-                    Debug.Log(shoeCount);
                     GameObject shoe = Instantiate(actualShoe, other.gameObject.GetComponent<CircleCollider2D>().ClosestPoint(transform.position), 
                                                             Quaternion.identity);
+                    gameContScript.EnableBallStasis();
                     audioSource.Play();
                     Destroy(shoe, 1f);
                     StartCoroutine(WaitForShoeRespawn());
@@ -53,9 +54,9 @@ public class Shoe : MonoBehaviour
                 {
                     Shoe2UI.SetActive(false);
                     shoeCount --;
-                    Debug.Log(shoeCount);
                     GameObject shoe = Instantiate(actualShoe, other.gameObject.GetComponent<CircleCollider2D>().ClosestPoint(transform.position), 
                                                             Quaternion.identity);
+                    gameContScript.EnableBallStasis();
                     audioSource.Play();
                     Destroy(shoe, 1f);
                     StartCoroutine(WaitForShoeRespawn());
@@ -67,9 +68,9 @@ public class Shoe : MonoBehaviour
                 {
                     Shoe3UI.SetActive(false);
                     shoeCount --;
-                    Debug.Log(shoeCount);
                     GameObject shoe = Instantiate(actualShoe, other.gameObject.GetComponent<CircleCollider2D>().ClosestPoint(transform.position), 
                                                             Quaternion.identity);
+                    gameContScript.EnableBallStasis();
                     audioSource.Play();
                     Destroy(shoe, 1f);
                     StartCoroutine(WaitForShoeRespawn());
@@ -77,7 +78,6 @@ public class Shoe : MonoBehaviour
             }
         }
     }
-
     IEnumerator WaitForShoeRespawn()
     {
         shoeCanSpawn = false;

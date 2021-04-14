@@ -4,7 +4,6 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using UnityEngine;
 
-
 public class SaveLoad : MonoBehaviour
 {
     GameController gameController;
@@ -13,7 +12,8 @@ public class SaveLoad : MonoBehaviour
     {
         gameController = GameObject.FindGameObjectWithTag("Controller").GetComponent<GameController>();
     }
-        public void SaveRecordToFile(int record)
+    //-Check for file, if none exists then create save data file
+    public void SaveRecordToFile(int record)
     {
         if(File.Exists(Application.persistentDataPath + "/SaveData.dat"))
         {
@@ -34,6 +34,9 @@ public class SaveLoad : MonoBehaviour
             doneSaving = true;
         }        
     }
+    //-Attempt to read save data file from persistent data path
+    //-If none exists, return tap record = 0
+    //-Called in GameController start function
     public int ReadRecordFromFile()
     {
         if(File.Exists(Application.persistentDataPath + "/SaveData.dat"))
@@ -50,6 +53,10 @@ public class SaveLoad : MonoBehaviour
             return 0;
         }
     }
+    //-Create serializable data class to save game record
+    //-Serializable attribute indicates class can be serialized,
+    //  or stored in a new format that can be reconstructed later
+    //-In this case, binary format
     
     [System.Serializable]
     public class GameData

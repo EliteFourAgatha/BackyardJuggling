@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
 public class ChangeBG : MonoBehaviour
 {
     public Sprite dayBGSprite;
@@ -24,7 +25,10 @@ public class ChangeBG : MonoBehaviour
     void Start()
     {
         dayChosen = true;
+        bgmEnabled = true;
     }
+    //-UI Button in Options Menu
+    //-Change background sprite and ambience audio
     public void ChooseDayBG()
     {
         nightChosen = false;
@@ -33,8 +37,14 @@ public class ChangeBG : MonoBehaviour
         {
             audioSource.clip = dayAmbience;
         }
+        if(bgmEnabled)
+        {
+            audioSource.clip = backgroundMusic;
+        }
         dayChosen = true;
     }
+    //-UI Button in Options Menu
+    //-Change background sprite and ambience audio
     public void ChooseNightBG()
     {
         dayChosen = false;
@@ -42,6 +52,10 @@ public class ChangeBG : MonoBehaviour
         if(ambienceEnabled)
         {
             audioSource.clip = nightAmbience;
+        }
+        if(bgmEnabled)
+        {
+            audioSource.clip = backgroundMusic;
         }
         nightChosen = true;
     }
@@ -66,6 +80,7 @@ public class ChangeBG : MonoBehaviour
             return false;
         }
     }
+    //UI Toggle for music in Options Menu
     public void SetBGM(bool choice)
     {
         if (choice == true)
@@ -78,6 +93,7 @@ public class ChangeBG : MonoBehaviour
             bgmEnabled = false;
         }
     }
+    //UI Toggle for ambiance in Options Menu
     public void SetAmbience(bool choice)
     {
         if (choice == true)
@@ -105,5 +121,9 @@ public class ChangeBG : MonoBehaviour
     public void StartBGM()
     {
         audioSource.Play();
+    }
+    public void PauseBGM()
+    {
+        audioSource.Pause();
     }
 }

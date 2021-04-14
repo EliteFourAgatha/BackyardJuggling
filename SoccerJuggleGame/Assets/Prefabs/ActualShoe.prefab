@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8205891366315374609}
   m_Layer: 0
   m_Name: ActualShoe
-  m_TagString: Untagged
+  m_TagString: Shoe
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 8205891366315374611}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -7.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -46,6 +46,8 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -70,7 +72,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 3551373670683353217, guid: 52aa4952fdb9e9d46a810d2821a0fa8b,
+  m_Sprite: {fileID: -7539193671442733400, guid: e5eda42e97f2ce948adc85baa0b02e49,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -91,7 +93,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 8205891366315374611}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: f8987bcae78e8b54680277a3c036bef6, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0

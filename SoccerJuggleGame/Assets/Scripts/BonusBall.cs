@@ -22,10 +22,14 @@ public class BonusBall : MonoBehaviour
     {
         SpawnBonusBalls();
     }
+    //-Check score from gamecontroller
+    //-Spawn bonus ball at random point in rectTransform spawn area
+    //
     public void SpawnBonusBalls()
     {
         if(gameContScript.tapCount % 10 == 0 && gameContScript.tapCount != 0 && !bonusBall1.activeInHierarchy && bonus1CanSpawn == true)
         {
+            //Randomly change balls position within the spawn area then set active
             bonusBall1.transform.position = new Vector3(Random.Range(bonusBall1SpawnArea.rect.xMin, bonusBall1SpawnArea.rect.xMax), 
                                         Random.Range(bonusBall1SpawnArea.rect.yMin, bonusBall1SpawnArea.rect.yMax), 0);
             bonusBall1.SetActive(true);

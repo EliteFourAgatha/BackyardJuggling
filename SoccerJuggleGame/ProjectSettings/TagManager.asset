@@ -11,6 +11,9 @@ TagManager:
   - Background
   - Bonus1
   - Bonus2
+  - Extra1
+  - Extra2
+  - Shoe
   layers:
   - Default
   - TransparentFX

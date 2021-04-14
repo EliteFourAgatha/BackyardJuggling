@@ -13,11 +13,15 @@ public class GameOver : MonoBehaviour
     GameController gameContScript;
     public Shoe shoeScript;
 
-    string shoeString;
     void Start()
     {
         gameContScript = gameController.GetComponent<GameController>();
     }
+    //-If game ball triggers game over collider,
+    //--Set Game HUD inactive
+    //--Stop music/ambiance
+    //--Then enable GameOver UI menu
+    //-If bonus ball 1 or 2 triggers, set inactive
 
     public void OnTriggerEnter2D(Collider2D other)
     {
@@ -38,12 +42,10 @@ public class GameOver : MonoBehaviour
         }
         else if (other.tag == "Bonus1")
         {
-            other.gameObject.GetComponent<TouchInput>().silverTaps = 0;
             other.gameObject.SetActive(false);
         }
         else if (other.tag == "Bonus2")
         {
-            other.gameObject.GetComponent<TouchInput>().goldTaps = 0;
             other.gameObject.SetActive(false);
         }
     }

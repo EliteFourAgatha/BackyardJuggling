@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,9 +8,11 @@ public class GameController : MonoBehaviour
     public Text tapCountText;
     public Text gameOverCountText;
     public Text gameOverRecordText;
+    public Text pauseMenuRecordText;
 
     public GameObject gameOverMenu;
     public GameObject ballStartPoint;
+    public GameObject ballStasisPoint;
     public GameObject mainMenu;
     public GameObject gameHUD;
     public GameObject pauseMenu;
@@ -27,19 +29,20 @@ public class GameController : MonoBehaviour
 
     public Rigidbody2D gameBallRB2D;
 
-    public AudioSource backgroundAudio;
-    SpriteRenderer gameBallSR;
-
     public ChangeBG changeBGScript;
     public SaveLoad saveLoadScript;
     BonusBall bonusBallScript;
     public Shoe shoeScript;
 
+    AudioSource ohYeahAudio;
+
     public int tapCount;
+    public bool stasisEnabled;
+    public float maxRotationTimer = 5f;
 
     int tapRecord;
     bool gamePaused = false;
-    bool doneSaving;
+    bool ohYeahAudioCanPlay;
     
     void Start()
     {
@@ -47,6 +50,8 @@ public class GameController : MonoBehaviour
         bonusBallScript = gameObject.GetComponent<BonusBall>();
         tapRecord = saveLoadScript.ReadRecordFromFile();
         changeBGScript.StartBGM();
+        ohYeahAudio = gameObject.GetComponent<AudioSource>();
+        ohYeahAudioCanPlay = true;
     }
     void Update()
     {
@@ -58,6 +63,12 @@ public class GameController : MonoBehaviour
         if(tapCount >= tapRecord)
         {
             tapRecord = tapCount;
+            if(ohYeahAudioCanPlay)
+            {
+                ohYeahAudio.Play();
+                ohYeahAudioCanPlay = false;
+            }
+
         }
     }
     public void SetNewTapRecord(int newRecord)
@@ -102,6 +113,7 @@ public class GameController : MonoBehaviour
         mainMenu.SetActive(false);
         rulesMenu.SetActive(true);
     }
+
     public void EnableCredits()
     {
         gameCredits.SetActive(true);
@@ -110,10 +122,12 @@ public class GameController : MonoBehaviour
     {
         gameCredits.SetActive(false);
     }
+    
     public void PlayGame()
     {
         tapCount = 0;
         shoeScript.shoeCount = 3;
+        ohYeahAudioCanPlay = true;
         gameBall.transform.position = ballStartPoint.transform.position;
         gameBallRB2D.gravityScale = 0.85f;
         mainMenu.SetActive(false);
@@ -143,7 +157,7 @@ public class GameController : MonoBehaviour
     {
         gamePaused = true;
         Time.timeScale = 0;
-        changeBGScript.StopBGM();
+        changeBGScript.PauseBGM();
         gameBall.SetActive(false);
         if(bonusBall1.activeInHierarchy)
         {
@@ -156,6 +170,7 @@ public class GameController : MonoBehaviour
             bonusBallScript.ChangeBonusBallState(2, false);
         }
         gameHUD.SetActive(false);
+        pauseMenuRecordText.text = tapRecord.ToString();
         pauseMenu.SetActive(true);
     }
     public void UnpauseGame()
@@ -208,8 +223,28 @@ public class GameController : MonoBehaviour
          }
     }
     //End Menu Buttons
-    public void IncreaseGravity()
-    {
 
+    //-Put ball into stasis mode if saved by shoe
+    //-Turn off gravity scale, and change velocity and angular velocity to 0
+    //-Start RotateObject coroutine
+    public void EnableBallStasis()
+    {
+        stasisEnabled = true;
+        gameBallRB2D.gravityScale = 0f;
+        gameBallRB2D.velocity = Vector3.zero;
+        gameBallRB2D.angularVelocity = 0f;
+        gameBall.transform.position = ballStasisPoint.transform.position;
+        StartCoroutine(RotateObject());
+    }
+    //Slowly rotate ball in place while in stasis
+    IEnumerator RotateObject()
+    {
+        float timer = 0f;
+        while(timer <= maxRotationTimer)
+        {
+            gameBall.transform.Rotate(new Vector3(0, 0, 1080) * Time.deltaTime * 0.25f);
+            timer += Time.deltaTime;
+            yield return null;
+        }
     }
 }

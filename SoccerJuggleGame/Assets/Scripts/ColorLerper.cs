@@ -16,6 +16,7 @@ public class ColorLerper : MonoBehaviour
 
     void Update()
     {
+        //Lerp color between red and green on a timer using PingPong
         lerpedColor = Color.Lerp(Color.red, Color.green, Mathf.PingPong(Time.time, lerpSpeed));
         ringRenderer.color = lerpedColor;
     }
