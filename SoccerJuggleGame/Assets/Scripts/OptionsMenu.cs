@@ -17,7 +17,8 @@ public class OptionsMenu : MonoBehaviour
     public AudioSource bonusBall1Audio;
     public AudioSource bonusBall2Audio;
     public AudioSource backgroundAudio;
-    public AudioSource ohYeahAudio;
+    public AudioSource highScoreSFXAudio;
+    public AudioSource shoeZoneAudio;
 
     public Image mainMenuBallImage;
 
@@ -25,6 +26,8 @@ public class OptionsMenu : MonoBehaviour
     GameObject bonusBall2;
 
     public ChangeBG changeBGScript;
+    public ColorLerper colorLerpScript;
+    public Dropdown dropdownColorOne;
 
     Image optionsMenuBallImage;
     Image flagImage;
@@ -54,6 +57,7 @@ public class OptionsMenu : MonoBehaviour
     {
         optionsMenuBallImage.sprite = ballArray[ballIndex];
         flagImage.sprite = flagArray[flagIndex];
+        SetDropdownChoice();
     }
     //Options menu right arrow UI button
     public void PressRightArrow()
@@ -109,7 +113,8 @@ public class OptionsMenu : MonoBehaviour
         gameBallAudio.enabled = newValue;
         bonusBall1Audio.enabled = newValue;
         bonusBall2Audio.enabled = newValue;
-        ohYeahAudio.enabled = newValue;
+        highScoreSFXAudio.enabled = newValue;
+        shoeZoneAudio.enabled = newValue;
     }
     //Enable or disable music based on UI selection
     public void BGMSliderChanged(bool newValue)
@@ -135,6 +140,28 @@ public class OptionsMenu : MonoBehaviour
         else
         {
             changeBGScript.SetAmbience(false);
+        }
+    }
+    //Set new ring color if changed by dropdown value
+    public void SetDropdownChoice()
+    {
+        switch(dropdownColorOne.value)
+        {
+            case 1:
+                colorLerpScript.startColor = Color.blue;
+                break;
+            case 2:
+                colorLerpScript.startColor = Color.red;
+                break;
+            case 3:
+                colorLerpScript.startColor = Color.green;
+                break;
+            case 4:
+                colorLerpScript.startColor = new Color(1f, 0.64f, 0f);
+                break;
+            case 5:
+                colorLerpScript.startColor = new Color(0.4f, 0.2f, 0.6f);
+                break;
         }
     }
 }

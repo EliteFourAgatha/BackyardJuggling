@@ -30,11 +30,12 @@ public class GameController : MonoBehaviour
     public Rigidbody2D gameBallRB2D;
 
     public ChangeBG changeBGScript;
+    public FadeUI fadeUIScript;
     public SaveLoad saveLoadScript;
-    BonusBall bonusBallScript;
+    private BonusBall bonusBallScript;
     public Shoe shoeScript;
 
-    AudioSource ohYeahAudio;
+    public AudioSource audioSource;
 
     public int tapCount;
     public bool stasisEnabled;
@@ -42,7 +43,7 @@ public class GameController : MonoBehaviour
 
     int tapRecord;
     bool gamePaused = false;
-    bool ohYeahAudioCanPlay;
+    bool highScoreSFXCanPlay;
     
     void Start()
     {
@@ -50,8 +51,8 @@ public class GameController : MonoBehaviour
         bonusBallScript = gameObject.GetComponent<BonusBall>();
         tapRecord = saveLoadScript.ReadRecordFromFile();
         changeBGScript.StartBGM();
-        ohYeahAudio = gameObject.GetComponent<AudioSource>();
-        ohYeahAudioCanPlay = true;
+        audioSource = gameObject.GetComponent<AudioSource>();
+        highScoreSFXCanPlay = true;
     }
     void Update()
     {
@@ -60,15 +61,18 @@ public class GameController : MonoBehaviour
     }
     public void CompareCountToRecord()
     {
+        //If new high score..
         if(tapCount >= tapRecord)
         {
             tapRecord = tapCount;
-            if(ohYeahAudioCanPlay)
+            //Play audio & enable high score UI
+            if(highScoreSFXCanPlay)
             {
-                ohYeahAudio.Play();
-                ohYeahAudioCanPlay = false;
+                fadeUIScript.FadeUIIn();
+                audioSource.Play();
+                highScoreSFXCanPlay = false;
+                StartCoroutine(WaitToFadeOut());
             }
-
         }
     }
     public void SetNewTapRecord(int newRecord)
@@ -127,7 +131,7 @@ public class GameController : MonoBehaviour
     {
         tapCount = 0;
         shoeScript.shoeCount = 3;
-        ohYeahAudioCanPlay = true;
+        highScoreSFXCanPlay = true;
         gameBall.transform.position = ballStartPoint.transform.position;
         gameBallRB2D.gravityScale = 0.85f;
         mainMenu.SetActive(false);
@@ -186,12 +190,7 @@ public class GameController : MonoBehaviour
             changeBGScript.StartBGM();
         }
         gameBall.SetActive(true);
-        //
-        //
-        //
-        //try if bonusball1.activeinhierarchy and see if it works
-        // if so, don't need reference to bonus ball script
-        // trying to unspaghetti the code a bit
+
         if(bonusBallScript.bonusBall1Active == true)
         {
             ChangeBonusBallState(1, true);
@@ -265,5 +264,10 @@ public class GameController : MonoBehaviour
             timer += Time.deltaTime;
             yield return null;
         }
+    }
+    IEnumerator WaitToFadeOut()
+    {
+        yield return new WaitForSeconds(2);
+        fadeUIScript.FadeUIOut();
     }
 }

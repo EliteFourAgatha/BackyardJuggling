@@ -4,9 +4,19 @@ using UnityEngine;
 
 public class ColorLerper : MonoBehaviour
 {
-    public float lerpSpeed = 3f;
+    public float lerpSpeed = 2f;
+    public Color startColor;
+    public Color endColor = Color.red;
     Color lerpedColor;
     public SpriteRenderer ringRenderer;
+
+    private void Start()
+    {
+        if(startColor == null)
+        {
+            startColor = Color.green;
+        }
+    }
 
     void Update()
     {
@@ -14,8 +24,8 @@ public class ColorLerper : MonoBehaviour
     }
     public void LerpRingColor()
     {
-        //Lerp color between red and green on timer using PingPong
-        lerpedColor = Color.Lerp(Color.red, Color.green, Mathf.PingPong(Time.time, lerpSpeed));
+        //Lerp color between values on timer using PingPong
+        lerpedColor = Color.Lerp(endColor, startColor, Mathf.PingPong(Time.time, lerpSpeed));
         ringRenderer.color = lerpedColor;
     }
 }

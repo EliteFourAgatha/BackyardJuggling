@@ -24,26 +24,33 @@ public class BonusBall : MonoBehaviour
     //-Spawn bonus ball at random point in rectTransform spawn area
     public void SpawnBonusBall()
     {
-        if(gameContScript.tapCount % 10 == 0 && gameContScript.tapCount != 0 && !bonusBall1.activeInHierarchy && bonus1CanSpawn == true)
+        if(gameContScript.tapCount % 10 == 0 && gameContScript.tapCount != 0)
         {
-            //Randomly change balls position within the spawn area then set active
-            bonusBall1.transform.position = new Vector3(Random.Range(bonusBall1SpawnArea.rect.xMin, bonusBall1SpawnArea.rect.xMax), 
-                                        Random.Range(bonusBall1SpawnArea.rect.yMin, bonusBall1SpawnArea.rect.yMax), 0);
-            bonusBall1.SetActive(true);
-            StartCoroutine(WaitForBonus1Respawn());
+            if(!bonusBall1.activeInHierarchy && bonus1CanSpawn == true)
+            {
+                //Randomly change ball 1 position within the spawn area, then set active
+                bonusBall1.transform.position = new Vector3(Random.Range(bonusBall1SpawnArea.rect.xMin, bonusBall1SpawnArea.rect.xMax), 
+                                            Random.Range(bonusBall1SpawnArea.rect.yMin, bonusBall1SpawnArea.rect.yMax), 0);
+                bonusBall1.SetActive(true);
+                StartCoroutine(WaitForBonus1Respawn());
+            }
         }
-        else if (gameContScript.tapCount % 20 == 0 && gameContScript.tapCount != 0 && !bonusBall2.activeInHierarchy && bonus2CanSpawn == true)
+        if (gameContScript.tapCount % 20 == 0 && gameContScript.tapCount != 0)
         {
-            bonusBall2.transform.position = new Vector3(Random.Range(bonusBall2SpawnArea.rect.xMin, bonusBall2SpawnArea.rect.xMax), 
-                                        Random.Range(bonusBall2SpawnArea.rect.yMin, bonusBall2SpawnArea.rect.yMax), 0);
-            bonusBall2.SetActive(true);
-            StartCoroutine(WaitForBonus2Respawn());
+            if(!bonusBall2.activeInHierarchy && bonus2CanSpawn == true)
+            {
+                //Randomly change ball 2 position within the spawn area, then set active
+                bonusBall2.transform.position = new Vector3(Random.Range(bonusBall2SpawnArea.rect.xMin, bonusBall2SpawnArea.rect.xMax), 
+                                            Random.Range(bonusBall2SpawnArea.rect.yMin, bonusBall2SpawnArea.rect.yMax), 0);
+                bonusBall2.SetActive(true);
+                StartCoroutine(WaitForBonus2Respawn());
+            }
         }
     }
     IEnumerator WaitForBonus1Respawn()
     {
         bonus1CanSpawn = false;
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(3f);
         bonus1CanSpawn = true;
     }
     IEnumerator WaitForBonus2Respawn()

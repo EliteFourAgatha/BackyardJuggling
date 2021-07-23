@@ -24,7 +24,7 @@ public class TouchInput : MonoBehaviour
         ballRB.AddForce(Vector2.up * forceValue, ForceMode2D.Impulse);
     }  
     
-    public void OnMouseDown()  //If user touch input on Android
+    public void OnMouseDown()  //If user touch input on mobile
     {
         //If ball is currently in stasis, disable it by re-enabling gravity
         if(gameContScript.stasisEnabled)

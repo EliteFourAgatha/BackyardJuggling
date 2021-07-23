@@ -26,6 +26,7 @@ public class Shoe : MonoBehaviour
     }
 
     //Spawn shoe under ball if it enters the shoe area
+    // Remove appropriate shoe from UI to keep track of shoes remaining
     public void OnTriggerEnter2D(Collider2D other)
     {
         if(other.tag == "GameBall")

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+//This script is attached to "Game Over" object, which is placed beneath game area with collider
 public class GameOver : MonoBehaviour
 {
     public GameObject gameController;
