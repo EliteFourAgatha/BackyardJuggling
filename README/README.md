@@ -7,9 +7,7 @@ Casual Android soccer ball juggling game
 
 Background
 
-Goal
-1. Finish game design cycle from start to finish
-2. Learn about developing for Android
+Goal : Learn about developing for Android
 
 ![Screenshot](/README/Screenshot_OptionsMenu.jpg)
 ![Screenshot](/README/Screenshot_GameOver.jpg)
